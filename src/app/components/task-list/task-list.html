@@ -1,0 +1,70 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      
+      <!-- Encabezado de la App -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary"><i class="fa-solid fa-book-journal-whills me-2"></i>Mi Bloc de Notas</h2>
+        <button class="btn btn-danger shadow-sm" (click)="exportToPDF()">
+          <i class="fa-solid fa-file-pdf me-2"></i>Exportar Reporte
+        </button>
+      </div>
+
+      <!-- Tarjeta para crear nueva tarea -->
+      <div class="card shadow-sm mb-4 border-0">
+        <div class="card-body bg-white rounded">
+          <div class="row g-2">
+            <div class="col-md-5">
+              <input type="text" class="form-control" placeholder="Título de la nota..." [(ngModel)]="newTaskTitle">
+            </div>
+            <div class="col-md-5">
+              <input type="text" class="form-control" placeholder="Descripción breve..." [(ngModel)]="newTaskDesc">
+            </div>
+            <div class="col-md-2 d-grid">
+              <button class="btn btn-success" (click)="addTask()">
+                <i class="fa-solid fa-plus"></i> Agregar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lista de tareas -->
+      <div class="card shadow-sm border-0">
+        <ul class="list-group list-group-flush">
+          
+          <li *ngIf="tasks.length === 0" class="list-group-item text-center text-muted py-4">
+            <i class="fa-solid fa-clipboard-list fa-3x mb-3 text-light"></i><br>
+            No hay notas. ¡Empieza a escribir!
+          </li>
+
+          <li *ngFor="let task of tasks" class="list-group-item d-flex justify-content-between align-items-center p-3">
+            <div>
+              <h5 class="mb-1" [ngClass]="{'text-decoration-line-through text-muted': task.completed}">
+                {{ task.title }}
+              </h5>
+              <p class="mb-0 text-secondary small">{{ task.description }}</p>
+            </div>
+            
+            <div>
+              <!-- Badge de estado -->
+              <span class="badge rounded-pill me-3" [ngClass]="task.completed ? 'bg-success' : 'bg-warning text-dark'">
+                {{ task.completed ? 'Completado' : 'Pendiente' }}
+              </span>
+
+              <!-- Botones de Acción -->
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="toggleComplete(task.id)" title="Marcar/Desmarcar">
+                <i class="fa-solid" [ngClass]="task.completed ? 'fa-rotate-left' : 'fa-check'"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteTask(task.id)" title="Eliminar">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </li>
+          
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
